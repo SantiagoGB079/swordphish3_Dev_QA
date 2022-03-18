@@ -1,0 +1,11 @@
+Send message:
+
+echo '{"urls":["https:\/\/inpost.pl-transpayingtrans.site"]}' | ./bin/kafka-console-producer.sh --bootstrap-server=localhost:9092 --topic=url
+
+Listen topics:
+
+./bin/kafka-console-consumer.sh --bootstrap-server=localhost:9092 --whitelist '.*'
+
+Create topic:
+
+./bin/kafka-topics.sh --create --topic url --bootstrap-server localhost:9092

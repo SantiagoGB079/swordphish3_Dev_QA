@@ -1,0 +1,20 @@
+version: "2"
+services:
+  swordphish-v3:
+    environment:
+    - PROFILE=${PROFILE}
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.scheduler.affinity:host_label_soft: "Portal-App-New"
+      io.rancher.container.hostname_override: container_name
+    tty: true
+    image: DOCKER_IMAGE
+    volumes:
+    - ${CONFIG_PATH}:/config
+    network_mode: "bridge"
+    networks:
+      - bridge
+
+networks:
+  bridge:
+    driver: bridge

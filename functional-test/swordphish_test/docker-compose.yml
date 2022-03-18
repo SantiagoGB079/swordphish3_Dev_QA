@@ -1,0 +1,39 @@
+version: '2.2'
+services:
+  zookeeper:
+    image: bitnami/zookeeper
+    ports:
+      - '2181:2181'
+    hostname: zookeeper
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+  kafka:
+    image: bitnami/kafka
+    container_name: 'kafka-server'
+    ports:
+      - '9092:9092'
+      - '9093:9093'
+    hostname: kafka
+    environment:
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_ADVERTISED_PORT=9092
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_LISTENERS=CLIENT://:9092,EXTERNAL://:9093
+      - KAFKA_ADVERTISED_LISTENERS=CLIENT://kafka:9092,EXTERNAL://localhost:9093
+      - KAFKA_INTER_BROKER_LISTENER_NAME=CLIENT
+    depends_on:
+      - zookeeper
+  swrodphish:
+    image: swordphish3:1.0.0
+    environment:
+      - ENV KAFKA_TOPIC_SWORDPHISH3=kafka:9092
+      - ENV SUSCRIBE_TOPIC=dms-swordphish-url
+      - ENV PUBLISH_TOPIC=dms-swordphish-url-score
+      - ENV MODEL_PROCESS=/model/swordphish3_dnn_features_appgate_may2021_train_nlp_model_v1.h5
+    depends_on:
+      - zookeeper
+      - kafka
+ # app:
+  #  image: 'swtestsjar:1.0.0'
+    #image: 'swtests:1.0.0'

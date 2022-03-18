@@ -1,0 +1,37 @@
+version: '2.2'
+services:
+  zookeeper:
+    image: bitnami/zookeeper
+    ports:
+      - '2181:2181'
+    hostname: zookeeper
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+  kafka:
+    image: bitnami/kafka
+    container_name: 'kafka-server'
+    ports:
+      - '9092:9092'
+      - '9093:9093'
+    hostname: kafka
+    environment:
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_ADVERTISED_PORT=9092
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_LISTENERS=CLIENT://:9092,EXTERNAL://:9093
+      - KAFKA_ADVERTISED_LISTENERS=CLIENT://kafka:9092,EXTERNAL://localhost:9093
+      - KAFKA_INTER_BROKER_LISTENER_NAME=CLIENT
+    depends_on:
+      - zookeeper
+  trifecta:
+    image: chatu/trifecta
+    ports:
+          - '8888:8888'
+    environment:
+      - ZOOKEEPERS=zookeeper:2181
+    depends_on:
+      - zookeeper
+      - kafka
+  app:
+    image: 'swordphish3:1.0.0'

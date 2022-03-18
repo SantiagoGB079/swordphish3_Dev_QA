@@ -1,0 +1,31 @@
+.catalog:
+  name: "Swordphish 3"
+  version: "APP_VERSION"
+  description: "Swordphish3"
+  uuid: swordphish3
+  minimum_rancher_version: v0.44.0
+  questions:
+    - variable: "MACHINE"
+      label: "Machine where swordphish3 will be deployed"
+      description: "Machine where swordphish3 will be deployed"
+      type: "string"
+      required: true
+    - variable: "CONFIG_PATH"
+      label: "Config path"
+      description: "Path where configuration files must reside"
+      type: "string"
+      required: true
+    - variable: "PROFILE"
+      type: enum
+      options:
+        - qa
+        - int
+        - beta
+        - prod
+        - euro
+      label: "Profile"
+      description: "A profile define which group of analyzer properties must be loaded"
+
+
+swordphish3:
+  scale: 2

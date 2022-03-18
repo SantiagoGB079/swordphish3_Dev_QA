@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dtp-swordphish3-configmap
+data:
+  KAFKA_TOPIC_SWORDPHISH3: dtp-integration-kafka.dtp.appgate.com:9092
+  SUSCRIBE_TOPIC: dms-swordphish-url
+  PUBLISH_TOPIC: dms-swordphish-url-score
+  MODEL_PROCESS: ../model/swordphish3_dnn_features_appgate_may2021_train_nlp_model_v1.h5

@@ -1,0 +1,10 @@
+{
+  "correlationId": "object.getCorrelationId()",
+  "traceabilityId": "object.getTraceabilityId() ",
+  "replyTo": "dtp.weblogs-service.1.reply.analyze-urls",
+  "urls": [
+    "object.getUrls()",
+    "https://facebook.com",
+    "https://www.youtube.com"
+  ]
+}
